@@ -25,7 +25,14 @@ Route::get('/admin/categorias', 'Admin\CategoriaController@index')->name('catego
 
 Route::get('/admin/categorias/criar', 'Admin\CategoriaController@criar')->name('categoria.criar');
 
+Route::post('/admin/categorias/criar', 'Admin\CategoriaController@salvar')->name('categoria.salvar');
+
 Route::get('/admin/categorias/editar/{id}', 'Admin\CategoriaController@editar')->name('categoria.editar');
 
-Route::post('/admin/categorias/criar', 'Admin\CategoriaController@salvar')->name('categoria.salvar');
+Route::put('/admin/categorias/editar/{id}', 'Admin\CategoriaController@atualizar')->name('categoria.atualizar');
+
+Route::get('/admin/categorias/visualizar/{id}', 'Admin\CategoriaController@visualizar')->name('categoria.visualizar');
+
+Route::delete('/admin/categorias/deletar/{id}', 'Admin\CategoriaController@deletar')->name('categoria.deletar');
+
 

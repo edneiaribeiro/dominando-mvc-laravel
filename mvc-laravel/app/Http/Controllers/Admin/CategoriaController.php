@@ -4,14 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use App\Categoria;
 
 class CategoriaController extends Controller
 {
     public function index()
     {
-        return view('admin.categorias.index');
+
+        $categoria = new Categoria;
+
+        $lista = $categoria->lista();
+
+        return view('admin.categorias.index', compact('lista'));
     }
 
     public function criar()
@@ -40,18 +44,77 @@ class CategoriaController extends Controller
         //Categoria::create($dados);
 
         /* Exemplo 3 - para salvar a categoria colocando todas as regras/tratamentos na classe model Categoria */
+
+        //dd(Categoria::all());
+
         $dados = $request->all();
 
         $categoria = new Categoria;
 
         $categoria->salvar($dados);
 
-        dd(Categoria::all());
+        return redirect()->route('categoria.criar');
 
     }
 
     public function editar($id)
     {
-        return view('admin.categorias.editar', compact('id'));
+
+        $registro = Categoria::find($id);
+
+        if($registro)
+        {
+            return view('admin.categorias.editar', compact('registro'));    
+
+        } else {
+
+            return redirect()->route('categoria.index');
+
+        }
     }
+
+    public function atualizar(Request $request, $id)
+    {
+
+        $dados = $request->all();
+
+        $categoria = Categoria::find($id);
+
+        $categoria->atualizar($dados);
+
+        return redirect()->route('categoria.index');
+
+    }
+
+    public function visualizar($id)
+    {
+
+        $registro = Categoria::find($id);
+
+        if($registro)
+        {
+            return view('admin.categorias.visualizar', compact('registro'));    
+
+        } else {
+
+            return redirect()->route('categoria.index');
+
+        }
+
+    }
+
+    public function deletar($id)
+    {
+
+        $registro = Categoria::find($id);
+
+        if($registro)
+        {
+            $registro->deletar();
+        }
+
+        return redirect()->route('categoria.index');
+
+    }
+
 }

@@ -14,14 +14,9 @@
                         </div>
                     @endif
 
-                    
-                    <form action="{{ route('categoria.atualizar', $registro->id) }}" method="post" class="">
-                        @csrf
-                        @method('PUT')
-                        @include('admin.categorias.formulario')
-                        <button>Atualizar</button>
-                    </form>
+                    <h2>Categoria:</h2>
 
+                    <p>Nome: {{ $registro->nome }}</p>
                 </div>
             </div>
         </div>

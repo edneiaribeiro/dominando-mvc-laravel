@@ -9,14 +9,14 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                        <div class="alert alert-{{ session('status') }}" role="alert">
+                            {{ session('msg') }}
                         </div>
                     @endif
 
                     <form action="{{ route('categoria.salvar') }}" method="post" class="">
                         @csrf
-                        <input type="text" name="nome" value="">
+                        @include('admin.categorias.formulario')
                         <button>Criar</button>
                     </form>
 
