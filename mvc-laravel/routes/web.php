@@ -36,3 +36,5 @@ Route::get('/admin/categorias/visualizar/{id}', 'Admin\CategoriaController@visua
 Route::delete('/admin/categorias/deletar/{id}', 'Admin\CategoriaController@deletar')->name('categoria.deletar');
 
 
+
+

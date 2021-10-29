@@ -8,19 +8,32 @@ use App\Categoria;
 
 class CategoriaController extends Controller
 {
+    private $model;
+    private $nomeRota;
+    private $pastaPrincipal;
+    private $pastaSecundaria;
+
+    public function __construct()
+    {
+        $this->model = new Categoria;
+        $this->nomeRota = 'categoria';
+        $this->pastaPrincipal = 'admin';
+        $this->pastaSecundaria = 'categorias';
+    }
+
     public function index()
     {
 
-        $categoria = new Categoria;
+        $registro = $this->model;
 
-        $lista = $categoria->lista();
+        $lista = $registro->lista();
 
-        return view('admin.categorias.index', compact('lista'));
+        return view("$this->pastaPrincipal.$this->pastaSecundaria.index", compact('lista'));
     }
 
     public function criar()
     {
-        return view('admin.categorias.criar');
+        return view("$this->pastaPrincipal.$this->pastaSecundaria.criar");
     }
 
     public function salvar(Request $request)
@@ -49,26 +62,26 @@ class CategoriaController extends Controller
 
         $dados = $request->all();
 
-        $categoria = new Categoria;
+        $registro = $this->model;
 
-        $categoria->salvar($dados);
+        $registro->salvar($dados);
 
-        return redirect()->route('categoria.criar');
+        return redirect()->route($this->nomeRota.'.index');
 
     }
 
     public function editar($id)
     {
 
-        $registro = Categoria::find($id);
+        $registro = $this->model::find($id);
 
         if($registro)
         {
-            return view('admin.categorias.editar', compact('registro'));    
+            return view("$this->pastaPrincipal.$this->pastaSecundaria.editar", compact('registro'));    
 
         } else {
 
-            return redirect()->route('categoria.index');
+            return redirect()->route("$this->nomeRota.index");
 
         }
     }
@@ -78,26 +91,26 @@ class CategoriaController extends Controller
 
         $dados = $request->all();
 
-        $categoria = Categoria::find($id);
+        $registro = $this->model::find($id);
 
-        $categoria->atualizar($dados);
+        $registro->atualizar($dados);
 
-        return redirect()->route('categoria.index');
+        return redirect()->route("$this->nomeRota.index");
 
     }
 
     public function visualizar($id)
     {
 
-        $registro = Categoria::find($id);
+        $registro = $this->model::find($id);
 
         if($registro)
         {
-            return view('admin.categorias.visualizar', compact('registro'));    
+            return view("$this->pastaPrincipal.$this->pastaSecundaria.visualizar", compact('registro'));    
 
         } else {
 
-            return redirect()->route('categoria.index');
+            return redirect()->route("$this->nomeRota.index");
 
         }
 
@@ -106,14 +119,14 @@ class CategoriaController extends Controller
     public function deletar($id)
     {
 
-        $registro = Categoria::find($id);
+        $registro = $this->model::find($id);
 
         if($registro)
         {
             $registro->deletar();
         }
 
-        return redirect()->route('categoria.index');
+        return redirect()->route("$this->nomeRota.index");
 
     }
 

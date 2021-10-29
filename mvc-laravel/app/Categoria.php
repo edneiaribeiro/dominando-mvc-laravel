@@ -11,6 +11,10 @@ class Categoria extends Model
         'nome'
     ];
 
+    private $validate = [
+        'nome'=>'required'
+    ];
+
     public function lista()
     {
         //$lista = Categoria::all();
@@ -28,10 +32,7 @@ class Categoria extends Model
 
         //$dados['nome'] = 'Nome: '.$dados['nome'];
 
-        Validator::make($dados, [
-            'nome'=>'required'
-
-        ])->validate();
+        Validator::make($dados, $this->validate)->validate();
 
         $ret = $this->create($dados);
 
@@ -56,10 +57,7 @@ class Categoria extends Model
 
     public function atualizar($dados)
     {
-        Validator::make($dados, [
-            'nome'=>'required'
-
-        ])->validate();
+        Validator::make($dados, $this->validate)->validate();
 
         $ret = $this->update($dados);
 

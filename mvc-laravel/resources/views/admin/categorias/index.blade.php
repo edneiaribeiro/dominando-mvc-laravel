@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+    @pagina_componente(['colunas' => '12', 'fluid' => true])
+        <div class="card">
+                @titulo_componente(['titulo' => 'Categorias'])
+                    
+                @endtitulo_componente
 
                 <div class="card-body">
                     @if (session('status'))
@@ -29,7 +29,7 @@
                             @foreach ($lista as $key => $value)
                               <tr>
                                 <th scope="row">{{ $value->id }}</th>
-                                <td>{{$value->nome}}</td>
+                                <td>{{ $value->nome }}</td>
                                 <td>
                                     
                                     <form action="{{ route('categoria.deletar', $value->id) }}" method="post" class="">
@@ -48,8 +48,6 @@
                       {{ $lista }}
 
                 </div>
-            </div>
         </div>
-    </div>
-</div>
+    @endpagina_componente
 @endsection
