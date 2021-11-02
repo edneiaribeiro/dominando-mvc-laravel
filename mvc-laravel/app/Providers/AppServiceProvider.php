@@ -33,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::component('componentes.paginacao', 'paginacao_componente');
         Blade::component('componentes.breadcrumb', 'breadcrumb_componente');
         Blade::component('componentes.busca', 'busca_componente');
+        Blade::component('componentes.card', 'card_componente');
+        Blade::component('componentes.button', 'button_componente');
     }
 }

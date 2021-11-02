@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth'); //colocamos esta verificacao diretamente nas rotas no arquivo routes/web
     }
 
     /**

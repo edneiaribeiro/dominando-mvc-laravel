@@ -17,26 +17,28 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
-Route::get('/lista', 'Admin\ClienteController@lista')->name('lista');
+Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function () {
 
-Route::get('/admin/categorias', 'Admin\CategoriaController@index')->name('categorias.index');
-Route::get('/admin/categorias/criar', 'Admin\CategoriaController@criar')->name('categorias.criar');
-Route::post('/admin/categorias/criar', 'Admin\CategoriaController@salvar')->name('categorias.salvar');
-Route::get('/admin/categorias/editar/{id}', 'Admin\CategoriaController@editar')->name('categorias.editar');
-Route::put('/admin/categorias/editar/{id}', 'Admin\CategoriaController@atualizar')->name('categorias.atualizar');
-Route::get('/admin/categorias/visualizar/{id}', 'Admin\CategoriaController@visualizar')->name('categorias.visualizar');
-Route::delete('/admin/categorias/deletar/{id}', 'Admin\CategoriaController@deletar')->name('categorias.deletar');
+    Route::get('/lista', 'ClienteController@lista')->name('lista');
 
-
-Route::get('/admin/usuarios', 'Admin\UsuarioController@index')->name('usuarios.index');
-Route::get('/admin/usuarios/criar', 'Admin\UsuarioController@criar')->name('usuarios.criar');
-Route::post('/admin/usuarios/criar', 'Admin\UsuarioController@salvar')->name('usuarios.salvar');
-Route::get('/admin/usuarios/editar/{id}', 'Admin\UsuarioController@editar')->name('usuarios.editar');
-Route::put('/admin/usuarios/editar/{id}', 'Admin\UsuarioController@atualizar')->name('usuarios.atualizar');
-Route::get('/admin/usuarios/visualizar/{id}', 'Admin\UsuarioController@visualizar')->name('usuarios.visualizar');
-Route::delete('/admin/usuarios/deletar/{id}', 'Admin\UsuarioController@deletar')->name('usuarios.deletar');
+    Route::get('/categorias', 'CategoriaController@index')->name('categorias.index');
+    Route::get('/categorias/criar', 'CategoriaController@criar')->name('categorias.criar');
+    Route::post('/categorias/criar', 'CategoriaController@salvar')->name('categorias.salvar');
+    Route::get('/categorias/editar/{id}', 'CategoriaController@editar')->name('categorias.editar');
+    Route::put('/categorias/editar/{id}', 'CategoriaController@atualizar')->name('categorias.atualizar');
+    Route::get('/categorias/visualizar/{id}', 'CategoriaController@visualizar')->name('categorias.visualizar');
+    Route::delete('/categorias/deletar/{id}', 'CategoriaController@deletar')->name('categorias.deletar');
+    
+    Route::get('/usuarios', 'UsuarioController@index')->name('usuarios.index');
+    Route::get('/usuarios/criar', 'UsuarioController@criar')->name('usuarios.criar');
+    Route::post('/usuarios/criar', 'UsuarioController@salvar')->name('usuarios.salvar');
+    Route::get('/usuarios/editar/{id}', 'UsuarioController@editar')->name('usuarios.editar');
+    Route::put('/usuarios/editar/{id}', 'UsuarioController@atualizar')->name('usuarios.atualizar');
+    Route::get('/usuarios/visualizar/{id}', 'UsuarioController@visualizar')->name('usuarios.visualizar');
+    Route::delete('/usuarios/deletar/{id}', 'UsuarioController@deletar')->name('usuarios.deletar');
+});
 
 
 

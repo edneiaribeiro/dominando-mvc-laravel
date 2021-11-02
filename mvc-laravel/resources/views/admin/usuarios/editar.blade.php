@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    @pagina_componente(['colunas' => '8', 'fluid' => true])
+    @pagina_componente(['colunas' => '12', 'fluid' => true])
         @cartaocrude_componente
             @slot('titulo')
                 @titulo_componente(['titulo' => $titulo])
@@ -16,7 +16,11 @@
                         @csrf
                         @method('PUT')
                         @include('admin.'.$nomeRota.'.formulario')
-                        <button>Atualizar</button>
+                        @button_componente([
+                            'classe' => 'btn-primary',
+                            'nome' => 'Atualizar'
+                        ])
+                        @endbutton_componente
                     </form>
             @endslot
         @endcartaocrude_componente

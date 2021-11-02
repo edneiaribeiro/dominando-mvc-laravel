@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -70,6 +72,8 @@ class User extends Authenticatable
     public function salvar($dados)
     {
         Validator::make($dados, $this->validate)->validate();
+        
+        $dados['password'] = Hash::make($dados['password']);
 
         $ret = $this->create($dados);
 
@@ -93,7 +97,25 @@ class User extends Authenticatable
 
     public function atualizar($dados)
     {
-        Validator::make($dados, $this->validate)->validate();
+        if (!$dados['password']) {
+            unset($dados['password']);
+        }
+
+        Validator::make($dados, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required', 
+                'string', 
+                'email', 
+                'max:255', 
+                Rule::unique('users')->ignore($this->id)
+            ],
+            'password' => ['sometimes', 'required', 'string', 'min:8', 'confirmed'],
+        ])->validate();
+
+        if ($dados['password'] ?? false) {
+            $dados['password'] = Hash::make($dados['password']);
+        }
 
         $ret = $this->update($dados);
 
