@@ -32,7 +32,8 @@
             @tabela_componente
               @slot('titulos')
                 <th scope="col">#</th>
-                <th scope="col">Categoria</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
                 <th scope="col">Ação</th>
               @endslot
 
@@ -40,9 +41,9 @@
                 @foreach ($lista as $key => $value)
                   <tr>
                     <th scope="row">{{ $value->id }}</th>
-                    <td>{{ $value->nome }}</td>
+                    <td>{{ $value->name }}</td>
+                    <td>{{ $value->email }}</td>
                     <td>
-                        
                         <form action="{{ route($nomeRota.'.deletar', $value->id) }}" method="post" class="">
                             @csrf
                             @method('DELETE')

@@ -12,11 +12,10 @@
                 @endalerta_componente
                 @breadcrumb_componente(["lista" => $breadcrumb])
                 @endbreadcrumb_componente
-                <form action="{{ route($nomeRota.'.salvar') }}" method="post" class="">
-                    @csrf
-                    @include('admin.'.$nomeRota.'.formulario')
-                    <button>Criar</button>
-                </form>
+                <h2>{{ $titulo }}:</h2>
+
+                <p>Nome: {{ $registro->name }}</p>
+                <p>E-mail: {{ $registro->email }}</p>
             @endslot
         @endcartaocrude_componente
     @endpagina_componente

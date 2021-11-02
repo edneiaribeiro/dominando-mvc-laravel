@@ -15,11 +15,29 @@ class Categoria extends Model
         'nome'=>'required'
     ];
 
+    private $paginacao = 5;
+
     public function lista()
     {
         //$lista = Categoria::all();
         //$lista = Categoria::orderBy('id', 'desc')->get();
-        return $this->orderBy('id', 'desc')->paginate(3);
+        return $this->orderBy('id', 'desc')->paginate($this->paginacao);
+    }
+
+    public function busca(string $busca, array $colunas)
+    {
+        return $this->where(function($query) use ($busca, $colunas) {
+            foreach ($colunas as $key => $coluna) {
+                
+                if ($coluna['tipo'] == 'string') {
+                    $query->orWhere($coluna['coluna'], 'like', '%'.$busca.'%');
+                }
+
+                if ($coluna['tipo'] == 'number') {
+                    $query->orWhere($coluna['coluna'], '=', $busca);
+                }
+            }
+        })->orderBy('id', 'desc')->paginate($this->paginacao);
     }
 
     public function salvar($dados)

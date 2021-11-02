@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Categoria;
+use App\User;
 
-class CategoriaController extends Controller
+class UsuarioController extends Controller
 {
     private $model;
     private $nomeRota;
@@ -15,10 +15,10 @@ class CategoriaController extends Controller
 
     public function __construct()
     {
-        $this->model = new Categoria;
-        $this->titulo = 'Categoria';
-        $this->titulo_plural = 'categorias';
-        $this->nomeRota = 'categorias';
+        $this->model = new User;
+        $this->titulo = 'Usuário';
+        $this->titulo_plural = 'Usuários';
+        $this->nomeRota = 'usuarios';
         $this->pastaPrincipal = 'admin';
     }
 
@@ -32,7 +32,8 @@ class CategoriaController extends Controller
         $busca = $request->busca ?? false;
         if($busca) {
             $lista = $registro->busca($busca, [
-                ['coluna' => 'nome', 'tipo' => 'string'],
+                ['coluna' => 'name', 'tipo' => 'string'],
+                ['coluna' => 'email', 'tipo' => 'string'],
                 ['coluna' => 'id', 'tipo' => 'number']
             ]);
         } else {
@@ -63,28 +64,6 @@ class CategoriaController extends Controller
 
     public function salvar(Request $request)
     {
-        //dd($request->all());
-
-        /* Exemplo 1 - para salvar a categoria pelo metodo simples, campo a campo */
-    
-        //$categoria = new Categoria;
-        //$categoria->nome = $dados['nome'];
-        //$categoria->save(); 
-        
-
-        /* Exemplo 2 - para salvar a categoria utilizando os campos fillable da classe Categoria  *
-           Interessante utilizar quando temos muitos campos para salvar para nao ter que fazer um por um
-           Para funcionar precisa configurar todos os campos na classe model Categoria e o array ($request) precisa enviar todos os campos configurados
-        */
-
-        //$dados = $request->all();
-
-        //Categoria::create($dados);
-
-        /* Exemplo 3 - para salvar a categoria colocando todas as regras/tratamentos na classe model Categoria */
-
-        //dd(Categoria::all());
-
         $dados = $request->all();
 
         $registro = $this->model;
@@ -92,7 +71,6 @@ class CategoriaController extends Controller
         $registro->salvar($dados);
 
         return redirect()->route($this->nomeRota.'.index');
-
     }
 
     public function editar($id)
@@ -134,7 +112,6 @@ class CategoriaController extends Controller
 
     public function visualizar($id)
     {
-
         $registro = $this->model::find($id);
         $titulo = $this->titulo;
         $nomeRota = $this->nomeRota;
@@ -154,12 +131,10 @@ class CategoriaController extends Controller
             return redirect()->route("$nomeRota.index");
 
         }
-
     }
 
     public function deletar($id)
     {
-
         $registro = $this->model::find($id);
 
         if($registro)
@@ -168,7 +143,5 @@ class CategoriaController extends Controller
         }
 
         return redirect()->route("$this->nomeRota.index");
-
     }
-
 }

@@ -1,25 +1,22 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    @pagina_componente(['colunas' => '8', 'fluid' => true])
+        @cartaocrude_componente
+            @slot('titulo')
+                @titulo_componente(['titulo' => $titulo])
+                @endtitulo_componente
+            @endslot
+            @slot('conteudo')
+                @alerta_componente
+                @endalerta_componente
+                @breadcrumb_componente(["lista" => $breadcrumb])
+                @endbreadcrumb_componente
+                <h2>{{ $titulo }}:</h2>
 
-                    <h2>Categoria:</h2>
+                <p>Nome: {{ $registro->nome }}</p>
+            @endslot
+        @endcartaocrude_componente
+    @endpagina_componente
 
-                    <p>Nome: {{ $registro->nome }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
